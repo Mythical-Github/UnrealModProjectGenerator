@@ -1,0 +1,15 @@
+{
+    "engine_info": {
+      "override_default_uproject_storage_directory": "false",
+      "uproject_storage_directory": "C:/Users/Mythical/Documents/GitHub",
+      "unreal_engine_installs": [
+        "D:/unreal_engine_installs/UE_4.17_source_build",
+        "D:/unreal_engine_installs/UE_4.18_DQ_XI_DE",
+        "D:/unreal_engine_installs/UE_4.22",
+        "D:/unreal_engine_installs/UE_4.27",
+        "D:/unreal_engine_installs/UE_5.1",
+        "C:/unreal_engine_installs/UE_5.2"
+      ]
+    }
+  }
+  

@@ -35,6 +35,26 @@ unreal_mod_project_generator_parser_dict = {
 }
 
 
+def create_uproject():
+    return
+
+
+def delete_uproject():
+    return
+
+
+def list_engine_info():
+    return
+
+
+def list_uproject_info():
+    return
+
+
+def dragged_game_exe_over_logic():
+    return
+
+
 def cli_logic():
     for key in unreal_mod_project_generator_parser_dict.keys():
         if CLI_ARGS.unreal_mod_project_generator_parser == key:
@@ -47,3 +67,5 @@ def cli_logic():
                     for arg in CLI_ARGS:
                         print(f'arg: {arg}')
                     function(*CLI_ARGS)
+            else: 
+                dragged_game_exe_over_logic()

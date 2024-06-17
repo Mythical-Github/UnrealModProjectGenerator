@@ -13,5 +13,8 @@ os.chdir(SCRIPT_DIR)
 settings_json = f'{SCRIPT_DIR}/settings.json'
 
 
-with open(settings_json, 'r') as file:
-    settings = json.load(file)
+try:
+    with open(settings_json, 'r') as file:
+        settings = json.load(file)
+except FileNotFoundError as error:
+    raise error

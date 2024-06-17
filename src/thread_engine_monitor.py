@@ -3,7 +3,6 @@ import threading
 import utilities
 
 
-init_done = False
 found_process = False
 found_window = False
 window_closed = False
@@ -28,10 +27,7 @@ def engine_monitor_thread_logic():
     global found_process
     global found_window
     global window_closed
-    global init_done
 
-    if not init_done:
-        init_done = True
 
     engine_window_name = utilities.get_engine_window_title()
     if not found_process:
@@ -53,7 +49,7 @@ def engine_monitor_thread_logic():
 def start_engine_monitor_thread():
     global engine_monitor_thread
     global run_monitoring_thread
-    run_monitoring_thread = True
+    run_monitoring_thread = ''
     engine_monitor_thread = threading.Thread(target=engine_monitor_thread_runner, daemon=True)
     engine_monitor_thread.start()
 

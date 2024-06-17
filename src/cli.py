@@ -1,3 +1,4 @@
+import sys
 import argparse
 
 
@@ -23,7 +24,7 @@ unreal_mod_project_generator_parser = parser.add_subparsers(dest='unreal_mod_pro
 
 
 ARGS = parser.parse_args()
-CLI_ARGS = ARGS[2:]
+CLI_ARGS = sys.argv[2:]
 
 
 unreal_mod_project_generator_parser_dict = {

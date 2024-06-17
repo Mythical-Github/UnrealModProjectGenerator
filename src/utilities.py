@@ -1,4 +1,5 @@
 import os
+import glob
 import json
 import enums
 import psutil
@@ -80,50 +81,23 @@ def get_unreal_editor_exe(engine_dir) -> str:
     return editor_exe
 
 
-def get_game_project_name():
-    return
-
-
-def get_is_game_iostore():
-    return
-
-
-def does_game_use_sigs():
-    return
-
-
-def does_game_have_pak_file():
-    return
-
-
-def does_game_have_loose_files():
-    return
-
-
 def get_win_dir_type() -> enums.PackagingDirType:
-    if is_game_ue5:
+    if is_game_ue5():
         return enums.PackagingDirType.WINDOWS
     else:
         return enums.PackagingDirType.WINDOWS_NO_EDITOR
 
 
 def get_win_dir_type_value() -> enums.PackagingDirType.value:
-    if is_game_ue5:
-        return enums.PackagingDirType.WINDOWS.value
-    else:
-        return enums.PackagingDirType.WINDOWS_NO_EDITOR.value
-
-
-def get_unreal_version_from_pak():
-    return
-
-
-def get_unreal_version_from_exe():
-    return
+    return get_win_dir_type().value
 
 
 def get_unreal_engine_build_file(engine_dir) -> str:
     return f'{engine_dir}/Engine/Build/Build.version'
+
+
+def has_build_target_been_built(engine_dir) -> bool:
+    return os.path.exists(get_unreal_engine_build_file(engine_dir))
 
 
 def get_unreal_version_from_build_file() -> str:
@@ -142,14 +116,75 @@ def get_game_directory(game_exe) -> str:
     return os.path.dirname(get_game_project_directory(game_exe))
 
 
+def get_game_project_name(game_exe) -> str:
+    return os.path.basename(get_game_project_directory(game_exe))
+
+
 def get_game_project_directory(game_exe) -> str:
     return os.path.dirname(os.path.dirname(os.path.dirname(game_exe)))
 
 
-def get_games_paks_folder(game_exe):
+def get_games_paks_directory(game_exe):
     paks_dir = f'{get_game_project_directory(game_exe)}/Content/Paks'
     if os.path.isdir(paks_dir):
         return paks_dir
     else:
         return None
     
+
+def get_files_in_tree(tree_path: str) -> list:
+    return glob.glob(tree_path + '/**/*', recursive=True)
+
+
+def get_file_extension(file_path: str) -> str:
+    _, file_extension = os.path.splitext(file_path)
+    return file_extension
+
+
+def get_file_extensions(file_path: str) -> list:
+    extensions = []
+    files = get_files_in_tree(file_path)
+    for file in files:
+        extensions.append(get_file_extension(file))
+    return extensions
+
+
+def get_is_game_iostore() -> bool:
+    is_game_iostore = False
+    file_extensions = get_file_extensions(get_games_paks_directory())
+    for file_extension in file_extensions:
+        if file_extension == '.ucas':
+            is_game_iostore = True
+        elif file_extension == '.utoc':
+            is_game_iostore = True
+    return is_game_iostore
+
+
+def does_game_use_sigs():
+    game_uses = False
+    file_extensions = get_file_extensions(get_games_paks_directory())
+    for file_extension in file_extensions:
+        if file_extension == '.sig':
+            game_uses = True
+    return game_uses
+
+
+def does_game_have_pak_file():
+    game_uses = False
+    file_extensions = get_file_extensions(get_games_paks_directory())
+    for file_extension in file_extensions:
+        if file_extension == '.pak':
+            game_uses = True
+    return game_uses
+
+
+def does_game_have_loose_files():
+    return
+
+
+def get_unreal_version_from_pak():
+    return
+
+
+def get_unreal_version_from_exe():
+    return

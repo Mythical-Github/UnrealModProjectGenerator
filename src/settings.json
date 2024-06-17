@@ -9,7 +9,11 @@
         "D:/unreal_engine_installs/UE_4.27",
         "D:/unreal_engine_installs/UE_5.1",
         "C:/unreal_engine_installs/UE_5.2"
-      ]
+      ],
+      "ini_configurations": {
+        "example_key": "example_value",
+        "example_key_two": "example_value_two"
+      }
     }
   }
   
